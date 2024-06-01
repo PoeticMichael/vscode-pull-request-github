@@ -8,11 +8,13 @@ import * as vscode from 'vscode';
 import { commands, contexts } from '../common/executeCommands';
 import { groupBy } from '../common/utils';
 import { FolderRepositoryManager, ReposManagerState } from '../github/folderRepositoryManager';
+import { GithubItemStateEnum, IAccount } from '../github/interface';
 import { IssueModel } from '../github/issueModel';
 import { RepositoriesManager } from '../github/repositoriesManager';
 import { issueBodyHasLink } from './issueLinkLookup';
 import { IssueItem, QueryGroup, StateManager } from './stateManager';
 import { issueMarkdown } from './util';
+
 
 export class QueryNode {
 	constructor(
@@ -93,6 +95,40 @@ export class IssuesTreeData
 		if (issueBodyHasLink(element)) {
 			treeItem.contextValue = 'link' + treeItem.contextValue;
 		}
+
+
+		/*
+		export interface IAccount extends IActor {
+	login: string;
+	id: string;
+	name?: string;
+	avatarUrl?: string;
+	url: string;
+	email?: string;
+}*/
+		(treeItem as any).poeticData = {
+			issue: {
+				number: element.number,
+				title: element.title,
+				titleHTML: element.titleHTML,
+				state: (element.state == GithubItemStateEnum.Open) ? 'open' :
+					(element.state == GithubItemStateEnum.Merged ? 'merged' :
+						'closed'),
+				author: {
+					login: element.author.login,
+					id: element.author.id,
+					name: element.author.name,
+					email: element.author.email
+				},
+				//assignees: element.assignees,
+				body: element.body,
+				bodyHTML: element.bodyHTML,
+				//remote: element.remote,
+				//GitHubRepository: element.githubRepository,
+				createdAt: element.createdAt,
+				updatedAt: element.updatedAt,
+			}
+		};
 		return treeItem;
 	}
 

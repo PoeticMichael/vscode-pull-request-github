@@ -32,7 +32,7 @@
 		"tokenInformation",
 		"treeViewMarkdownMessage"
 	],
-	"version": "0.88.0",
+	"version": "0.88.2",
 	"publisher": "GitHub",
 	"engines": {
 		"vscode": "^1.89.0"
@@ -100,7 +100,7 @@
 					"description": "%githubPullRequests.pullRequestDescription.description%"
 				},
 				"githubPullRequests.defaultCreateOption": {
-					"type":"string",
+					"type": "string",
 					"enum": [
 						"lastUsed",
 						"create",
@@ -441,7 +441,11 @@
 				},
 				"githubPullRequests.createDefaultBaseBranch": {
 					"type": "string",
-					"enum": ["repositoryDefault", "createdFromBranch", "auto"],
+					"enum": [
+						"repositoryDefault",
+						"createdFromBranch",
+						"auto"
+					],
 					"markdownEnumDescriptions": [
 						"%githubPullRequests.createDefaultBaseBranch.repositoryDefault%",
 						"%githubPullRequests.createDefaultBaseBranch.createdFromBranch%",
@@ -593,7 +597,9 @@
 						{
 							"label": "%githubIssues.queries.default.myIssues%",
 							"query": "is:open assignee:${user} repo:${owner}/${repository}",
-							"groupBy": ["milestone"]
+							"groupBy": [
+								"milestone"
+							]
 						},
 						{
 							"label": "%githubIssues.queries.default.createdIssues%",
